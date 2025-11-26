@@ -1,0 +1,16 @@
+﻿@model WebProgOdev.Models.Service
+
+<head>
+    <title>Servis Bilgileri</title>
+</head>
+<body>
+
+    <h1>Servis Bilgileri</h1>
+
+    <p>Adı: @Model.Name</p>
+    <p>Açıklama: @Model.Description</p>
+    <p>Süre: @Model.DurationMinutes dakika</p>
+    <p>Ücret: @Model.Price</p>
+    <p>Aktif: @(Model.IsActive ? "Evet" : "Hayır")</p>
+
+</body>

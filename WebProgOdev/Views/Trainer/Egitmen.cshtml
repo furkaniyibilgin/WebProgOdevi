@@ -1,0 +1,15 @@
+﻿@model WebProgOdev.Models.Trainer
+
+<head>
+    <title>Eğitmen Bilgileri</title>
+</head>
+<body>
+
+    <h1>Eğitmen Bilgileri</h1>
+
+    <p>Ad Soyad: @Model.FullName</p>
+    <p>Uzmanlık @Model.Specialty</p>
+    <p>Hakkında: @Model.Bio</p>
+    <p>@(Model.IsActive ? "Evet" : "Hayır")</p>
+
+</body>
