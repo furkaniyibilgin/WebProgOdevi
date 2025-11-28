@@ -21,9 +21,14 @@ namespace WebProgOdev.Models
         public string Bio { get; set; } = string.Empty;
 
         public bool IsActive { get; set; } = true;
+        
+        [Range(0, 23, ErrorMessage = "Başlangıç saati 0 ile 23 arasında olmalıdır.")]
+        public int StartHour { get; set; } = 9;
+
+        [Range(0, 23, ErrorMessage = "Bitiş saati 0 ile 23 arasında olmalıdır.")]
+        public int EndHour { get; set; } = 18;
 
         public ICollection<Appointment> Appointments { get; set; } = new List<Appointment>();
-
         public string FullName => $"{FirstName} {LastName}";
     }
 }

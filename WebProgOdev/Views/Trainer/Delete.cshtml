@@ -1,0 +1,20 @@
+﻿@model WebProgOdev.Models.Trainer
+
+@{
+    ViewData["Title"] = "Eğitmen Sil";
+}
+
+<h2>Eğitmen Sil</h2>
+
+<p>Bu eğitmeni silmek istediğinize emin misiniz?</p>
+
+<ul>
+    <li>Ad Soyad: @Model.FirstName @Model.LastName</li>
+    <li>Uzmanlık: @Model.Specialty</li>
+    <li>Çalışma Saatleri: @Model.StartHour:00 - @Model.EndHour:00</li>
+</ul>
+
+<form method="post" asp-action="DeleteConfirmed" asp-route-id="@Model.Id">
+    <button type="submit" class="btn btn-danger">Evet, Sil</button>
+    <a class="btn btn-secondary" asp-action="List">Vazgeç</a>
+</form>

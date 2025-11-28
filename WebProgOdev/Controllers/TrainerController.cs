@@ -13,7 +13,101 @@ namespace WebProgOdev.Controllers
         {
             _context = context;
         }
+        private bool IsAdmin()
+        {
+            var role = HttpContext.Session.GetString("UserRole");
+            return role == "Admin";
+        }
 
+        public IActionResult List()     //admin lisdt
+        {
+            if (!IsAdmin())
+            {
+                return Content("Bu sayfaya sadece admin erişebilir.");
+            }
+
+            var trainers = _context.Trainers.ToList();
+            return View(trainers);
+        }
+        public IActionResult PublicList()   //user için list
+        {
+            var trainers = _context.Trainers
+                .Where(t => t.IsActive)
+                .ToList();
+
+            return View(trainers);
+        }
+
+        [HttpGet]
+        public IActionResult Create()
+        {
+            if (!IsAdmin())
+            {
+                return Content("Bu sayfaya sadece admin erişebilir.");
+            }
+
+            return View(new Trainer());
+        }
+
+        [HttpPost]
+        public IActionResult Create(Trainer model)
+        {
+            if (!IsAdmin())
+            {
+                return Content("Bu sayfaya sadece admin erişebilir.");
+            }
+
+            if (model.StartHour >= model.EndHour)
+            {
+                ModelState.AddModelError("", "Başlangıç saati bitiş saatinden küçük olmalıdır.");
+            }
+
+            if (!ModelState.IsValid)
+            {
+                return View(model);
+            }
+
+            _context.Trainers.Add(model);
+            _context.SaveChanges();
+
+            return RedirectToAction("List");
+        }
+
+        [HttpGet]
+        public IActionResult Delete(int id)
+        {
+            if (!IsAdmin())
+            {
+                return Content("Bu sayfaya sadece admin erişebilir.");
+            }
+
+            var trainer = _context.Trainers.FirstOrDefault(t => t.Id == id);
+            if (trainer == null)
+            {
+                return NotFound();
+            }
+
+            return View(trainer);
+        }
+        [HttpPost]
+        public IActionResult DeleteConfirmed(int id)
+        {
+            if (!IsAdmin())
+            {
+                return Content("Bu sayfaya sadece admin erişebilir.");
+            }
+
+            var trainer = _context.Trainers.FirstOrDefault(t => t.Id == id);
+            if (trainer == null)
+            {
+                return NotFound();
+            }
+
+            _context.Trainers.Remove(trainer);
+            _context.SaveChanges();
+
+            return RedirectToAction("List");
+        }
         public ActionResult Egitmen(int id = 1)
         {
             var trainer = _context.Trainers.FirstOrDefault(t => t.Id == id);

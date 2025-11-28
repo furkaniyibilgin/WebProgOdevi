@@ -1,0 +1,37 @@
+﻿@model IEnumerable<WebProgOdev.Models.Service>
+
+@{
+    ViewData["Title"] = "Servisler";
+}
+
+<h2>Servisler</h2>
+
+<p>
+    <a class="btn btn-primary" asp-action="Create">Yeni Servis Ekle</a>
+</p>
+
+<table class="table table-striped">
+    <thead>
+        <tr>
+            <th>Adı</th>
+            <th>Süre (dk)</th>
+            <th>Ücret</th>
+            <th>Aktif mi?</th>
+            <th></th>
+        </tr>
+    </thead>
+    <tbody>
+        @foreach (var s in Model)
+        {
+            <tr>
+                <td>@s.Name</td>
+                <td>@s.DurationMinutes</td>
+                <td>@s.Price</td>
+                <td>@(s.IsActive ? "Evet" : "Hayır")</td>
+                <td>
+                    <a class="btn btn-sm btn-danger" asp-action="Delete" asp-route-id="@s.Id">Sil</a>
+                </td>
+            </tr>
+        }
+    </tbody>
+</table>
