@@ -1,0 +1,58 @@
+﻿@model WebProgOdev.Models.AppointmentCreateViewModel
+
+@if (!ViewData.ModelState.IsValid)
+{
+    <div class="alert alert-danger">
+        @foreach (var error in ViewData.ModelState.Values.SelectMany(v => v.Errors))
+        {
+            <div>@error.ErrorMessage</div>
+        }
+    </div>
+}
+
+
+@{
+    ViewData["Title"] = "Yeni Randevu";
+}
+
+<h2>Yeni Randevu</h2>
+
+<form method="post">
+    <div class="mb-3">
+        <label class="form-label">Servis</label>
+        <select class="form-select" asp-for="ServiceId">
+            <option value="">-- Seçiniz --</option>
+            @foreach (var s in (IEnumerable<WebProgOdev.Models.Service>)ViewBag.Services)
+            {
+                <option value="@s.Id">@s.Name (@s.DurationMinutes dk / @s.Price)</option>
+            }
+        </select>
+        @Html.ValidationMessageFor(m => m.ServiceId, "", new { @class = "text-danger" })
+    </div>
+
+    <div class="mb-3">
+        <label class="form-label">Eğitmen</label>
+        <select class="form-select" asp-for="TrainerId">
+            <option value="">-- Seçiniz --</option>
+            @foreach (var t in (IEnumerable<WebProgOdev.Models.Trainer>)ViewBag.Trainers)
+            {
+                <option value="@t.Id">@t.FullName (@t.StartHour:00 - @t.EndHour:00)</option>
+            }
+            }
+        </select>
+        @Html.ValidationMessageFor(m => m.TrainerId, "", new { @class = "text-danger" })
+    </div>
+
+    <div class="mb-3">
+        <label class="form-label">Başlangıç Zamanı</label>
+        @Html.TextBoxFor(m => m.StartTime, new { @class = "form-control", type = "datetime-local" })
+        @Html.ValidationMessageFor(m => m.StartTime, "", new { @class = "text-danger" })
+    </div>
+
+    <button type="submit" class="btn btn-primary">Randevu Oluştur</button>
+    <a class="btn btn-secondary" asp-controller="Home" asp-action="Index">Vazgeç</a>
+</form>
+
+@section Scripts {
+    <partial name="_ValidationScriptsPartial" />
+}

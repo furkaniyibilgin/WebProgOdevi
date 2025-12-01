@@ -40,7 +40,7 @@ namespace WebProgOdev.Controllers
             var user = new User
             {
                 Email = email,
-                Password = password,   // Basic intro, no hashing
+                Password = password,
                 FirstName = firstName ?? "",
                 LastName = lastName ?? "",
                 Role = "Member"
@@ -49,7 +49,6 @@ namespace WebProgOdev.Controllers
             _context.Users.Add(user);
             _context.SaveChanges();
 
-            // AFTER REGISTER → REDIRECT TO LOGIN PAGE (no auto login)
             return RedirectToAction("Login", "Account");
         }
 
