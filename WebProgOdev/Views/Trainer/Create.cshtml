@@ -32,16 +32,27 @@
     </div>
 
     <div class="mb-3">
-        <label class="form-label">Başlangıç Saati (0-23)</label>
-        @Html.TextBoxFor(m => m.StartHour, new { @class = "form-control", type = "number", min = "0", max = "23" })
+        <label class="form-label">Başlangıç Saati</label>
+        <select asp-for="StartHour" class="form-select">
+            @for (int h = 8; h <= 21; h++)
+            {
+                <option value="@h">@h:00</option>
+            }
+        </select>
         @Html.ValidationMessageFor(m => m.StartHour, "", new { @class = "text-danger" })
     </div>
 
     <div class="mb-3">
-        <label class="form-label">Bitiş Saati (0-23)</label>
-        @Html.TextBoxFor(m => m.EndHour, new { @class = "form-control", type = "number", min = "0", max = "23" })
+        <label class="form-label">Bitiş Saati</label>
+        <select asp-for="EndHour" class="form-select">
+            @for (int h = 9; h <= 22; h++)
+            {
+                <option value="@h">@h:00</option>
+            }
+        </select>
         @Html.ValidationMessageFor(m => m.EndHour, "", new { @class = "text-danger" })
     </div>
+
 
     <div class="form-check mb-3">
         @Html.CheckBoxFor(m => m.IsActive, new { @class = "form-check-input" })

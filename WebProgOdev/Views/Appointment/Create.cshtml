@@ -10,7 +10,6 @@
     </div>
 }
 
-
 @{
     ViewData["Title"] = "Yeni Randevu";
 }
@@ -38,15 +37,71 @@
             {
                 <option value="@t.Id">@t.FullName (@t.StartHour:00 - @t.EndHour:00)</option>
             }
-            }
         </select>
         @Html.ValidationMessageFor(m => m.TrainerId, "", new { @class = "text-danger" })
     </div>
 
+    <!-- Gün seçimi: Bugün / Yarın -->
     <div class="mb-3">
-        <label class="form-label">Başlangıç Zamanı</label>
-        @Html.TextBoxFor(m => m.StartTime, new { @class = "form-control", type = "datetime-local" })
-        @Html.ValidationMessageFor(m => m.StartTime, "", new { @class = "text-danger" })
+        <label class="form-label">Gün</label>
+        <select asp-for="DayOption" class="form-select">
+            <option value="Today">Bugün</option>
+            <option value="Tomorrow">Yarın</option>
+        </select>
+    </div>
+
+    <div class="mb-3">
+        <label class="form-label">Başlangıç Saati</label>
+        <div class="row">
+            <div class="col-md-3">
+                <select asp-for="StartHour" class="form-select">
+                    <option value="">Saat</option>
+                    @for (int h = 8; h <= 22; h++)
+                    {
+                        <option value="@h">@h:00</option>
+                    }
+                </select>
+                @Html.ValidationMessageFor(m => m.StartHour, "", new { @class = "text-danger" })
+            </div>
+
+            <div class="col-md-3">
+                <select asp-for="StartMinute" class="form-select">
+                    <option value="">Dakika</option>
+                    <option value="0">00</option>
+                    <option value="15">15</option>
+                    <option value="30">30</option>
+                    <option value="45">45</option>
+                </select>
+                @Html.ValidationMessageFor(m => m.StartMinute, "", new { @class = "text-danger" })
+            </div>
+        </div>
+    </div>
+
+    <div class="mb-3">
+        <label class="form-label">Bitiş Saati</label>
+        <div class="row">
+            <div class="col-md-3">
+                <select asp-for="EndHour" class="form-select">
+                    <option value="">Saat</option>
+                    @for (int h = 8; h <= 22; h++)
+                    {
+                        <option value="@h">@h:00</option>
+                    }
+                </select>
+                @Html.ValidationMessageFor(m => m.EndHour, "", new { @class = "text-danger" })
+            </div>
+
+            <div class="col-md-3">
+                <select asp-for="EndMinute" class="form-select">
+                    <option value="">Dakika</option>
+                    <option value="0">00</option>
+                    <option value="15">15</option>
+                    <option value="30">30</option>
+                    <option value="45">45</option>
+                </select>
+                @Html.ValidationMessageFor(m => m.EndMinute, "", new { @class = "text-danger" })
+            </div>
+        </div>
     </div>
 
     <button type="submit" class="btn btn-primary">Randevu Oluştur</button>

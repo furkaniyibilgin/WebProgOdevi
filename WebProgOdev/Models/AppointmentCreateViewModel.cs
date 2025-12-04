@@ -1,4 +1,5 @@
-﻿using System.ComponentModel.DataAnnotations;
+﻿using System;
+using System.ComponentModel.DataAnnotations;
 
 namespace WebProgOdev.Models
 {
@@ -10,8 +11,22 @@ namespace WebProgOdev.Models
         [Required(ErrorMessage = "Eğitmen seçimi zorunludur.")]
         public int TrainerId { get; set; }
 
-        [Required(ErrorMessage = "Başlangıç zamanı zorunludur.")]
-        [DataType(DataType.DateTime)]
-        public DateTime StartTime { get; set; }
+        [Required(ErrorMessage = "Tarih zorunludur.")]
+        [DataType(DataType.Date)]
+        public DateTime Date { get; set; }
+
+        [Required(ErrorMessage = "Başlangıç saati zorunludur.")]
+        public int StartHour { get; set; }
+
+        [Required(ErrorMessage = "Başlangıç dakikası zorunludur.")]
+        public int StartMinute { get; set; }
+
+        [Required(ErrorMessage = "Bitiş saati zorunludur.")]
+        public int EndHour { get; set; }
+
+        [Required(ErrorMessage = "Bitiş dakikası zorunludur.")]
+        public int EndMinute { get; set; }
+        public string DayOption { get; set; } = "Today"; // "Today" or "Tomorrow"
+
     }
 }
