@@ -17,18 +17,21 @@
 <h2>Yeni Randevu</h2>
 
 <form method="post">
+
+    <!-- SERVIS -->
     <div class="mb-3">
         <label class="form-label">Servis</label>
         <select class="form-select" asp-for="ServiceId">
             <option value="">-- Seçiniz --</option>
             @foreach (var s in (IEnumerable<WebProgOdev.Models.Service>)ViewBag.Services)
             {
-                <option value="@s.Id">@s.Name (@s.DurationMinutes dk / @s.Price)</option>
+                <option value="@s.Id">@s.Name (@s.Price ₺)</option>
             }
         </select>
         @Html.ValidationMessageFor(m => m.ServiceId, "", new { @class = "text-danger" })
     </div>
 
+    <!-- EGITMEN -->
     <div class="mb-3">
         <label class="form-label">Eğitmen</label>
         <select class="form-select" asp-for="TrainerId">
@@ -40,16 +43,15 @@
         </select>
         @Html.ValidationMessageFor(m => m.TrainerId, "", new { @class = "text-danger" })
     </div>
-
-    <!-- Gün seçimi: Bugün / Yarın -->
+    
+    <!-- TARIH -->
     <div class="mb-3">
-        <label class="form-label">Gün</label>
-        <select asp-for="DayOption" class="form-select">
-            <option value="Today">Bugün</option>
-            <option value="Tomorrow">Yarın</option>
-        </select>
+        <label class="form-label">Tarih</label>
+        <input asp-for="Date" type="date" class="form-control" />
+        @Html.ValidationMessageFor(m => m.Date, "", new { @class = "text-danger" })
     </div>
 
+    <!-- BASLANGIC SAATI -->
     <div class="mb-3">
         <label class="form-label">Başlangıç Saati</label>
         <div class="row">
@@ -58,7 +60,7 @@
                     <option value="">Saat</option>
                     @for (int h = 8; h <= 22; h++)
                     {
-                        <option value="@h">@h:00</option>
+                        <option value="@h">@h</option>
                     }
                 </select>
                 @Html.ValidationMessageFor(m => m.StartHour, "", new { @class = "text-danger" })
@@ -77,6 +79,7 @@
         </div>
     </div>
 
+    <!-- BITIS SAATI -->
     <div class="mb-3">
         <label class="form-label">Bitiş Saati</label>
         <div class="row">
@@ -85,7 +88,7 @@
                     <option value="">Saat</option>
                     @for (int h = 8; h <= 22; h++)
                     {
-                        <option value="@h">@h:00</option>
+                        <option value="@h">@h</option>
                     }
                 </select>
                 @Html.ValidationMessageFor(m => m.EndHour, "", new { @class = "text-danger" })

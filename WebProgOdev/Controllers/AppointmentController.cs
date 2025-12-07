@@ -77,7 +77,6 @@ namespace WebProgOdev.Controllers
         }
 
 
-
         [HttpPost]
         public IActionResult Create(AppointmentCreateViewModel model)
         {
@@ -119,12 +118,14 @@ namespace WebProgOdev.Controllers
                 return View(model);
             }
 
+            // TARİH KONTROLÜ
             if (model.Date == DateTime.MinValue)
             {
                 ModelState.AddModelError("", "Geçerli bir tarih seçilmelidir.");
                 return View(model);
             }
 
+            // Dakika kontrolü (sunucu tarafı)
             if (model.StartMinute != 0 && model.StartMinute != 15 &&
                 model.StartMinute != 30 && model.StartMinute != 45)
             {
@@ -139,6 +140,7 @@ namespace WebProgOdev.Controllers
                 return View(model);
             }
 
+            // TARİH + SAAT birleştir
             var startTime = new DateTime(
                 model.Date.Year,
                 model.Date.Month,
@@ -157,18 +159,23 @@ namespace WebProgOdev.Controllers
                 0
             );
 
-            if (startTime <= DateTime.Now)
+            // 1) Geçmiş gün olmasın
+            if (model.Date.Date < DateTime.Today)
             {
-                ModelState.AddModelError("", "Randevu başlangıç zamanı bugünden sonra olmalıdır.");
+                ModelState.AddModelError("", "Randevu tarihi bugünden önce olamaz.");
                 return View(model);
             }
 
-            if (endTime <= startTime)
+            // 2) Eğer tarih bugünün tarihi ise, saat de şu andan sonra olmalı
+            if (model.Date.Date == DateTime.Today &&
+                startTime.TimeOfDay <= DateTime.Now.TimeOfDay)
             {
-                ModelState.AddModelError("", "Bitiş zamanı başlangıç zamanından sonra olmalıdır.");
+                ModelState.AddModelError("", "Bugün için randevu saati şu andan sonra olmalıdır.");
                 return View(model);
             }
 
+
+            // Eğitmen çalışma saatleri
             if (startTime.Hour < trainer.StartHour || endTime.Hour > trainer.EndHour)
             {
                 ModelState.AddModelError("",
@@ -176,6 +183,7 @@ namespace WebProgOdev.Controllers
                 return View(model);
             }
 
+            // Eğitmen randevu çakışma kontrolü
             bool trainerOverlap = _context.Appointments
                 .Where(a => a.TrainerId == trainer.Id)
                 .Any(a =>
@@ -189,6 +197,7 @@ namespace WebProgOdev.Controllers
                 return View(model);
             }
 
+            // Kullanıcı randevu çakışma kontrolü
             bool userOverlap = _context.Appointments
                 .Where(a => a.UserId == userId)
                 .Any(a =>
@@ -208,14 +217,15 @@ namespace WebProgOdev.Controllers
             appointment.UserId = userId;
             appointment.StartTime = startTime;
             appointment.EndTime = endTime;
-            appointment.Price = service.Price;            
-            appointment.Status = AppointmentStatus.Pending;  
+            appointment.Price = service.Price;
+            appointment.Status = AppointmentStatus.Pending;
 
             _context.Appointments.Add(appointment);
             _context.SaveChanges();
 
             return RedirectToAction("MyAppointments");
         }
+
 
         [HttpGet]
         public IActionResult MyAppointments()

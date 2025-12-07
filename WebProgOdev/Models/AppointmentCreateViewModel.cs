@@ -26,7 +26,5 @@ namespace WebProgOdev.Models
 
         [Required(ErrorMessage = "Bitiş dakikası zorunludur.")]
         public int EndMinute { get; set; }
-        public string DayOption { get; set; } = "Today"; // "Today" or "Tomorrow"
-
     }
 }
