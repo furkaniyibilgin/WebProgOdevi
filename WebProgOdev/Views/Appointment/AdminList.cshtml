@@ -1,0 +1,64 @@
+﻿@model IEnumerable<WebProgOdev.Models.Appointment>
+
+@{
+    ViewData["Title"] = "Randevu Yönetimi";
+}
+
+<h2>Randevu Yönetimi</h2>
+
+<table class="table table-striped table-bordered">
+    <thead>
+        <tr>
+            <th>ID</th>
+            <th>Kullanıcı</th>
+            <th>Eğitmen</th>
+            <th>Servis</th>
+            <th>Başlangıç</th>
+            <th>Bitiş</th>
+            <th>Fiyat</th>
+            <th>Durum</th>
+            <th>İşlem</th>
+        </tr>
+    </thead>
+    <tbody>
+        @foreach (var a in Model)
+        {
+            <tr>
+                <td>@a.Id</td>
+                <td>@(a.User.FirstName) @(a.User.LastName) (@a.User.Email)</td>
+                <td>@a.Trainer.FullName</td>
+                <td>@a.Service.Name</td>
+                <td>@a.StartTime.ToString("dd.MM.yyyy HH:mm")</td>
+                <td>@a.EndTime.ToString("dd.MM.yyyy HH:mm")</td>
+                <td>@a.Price</td>
+                <td>@a.Status</td>
+                <td>
+                    @if (a.Status == WebProgOdev.Models.AppointmentStatus.Pending)
+                    {
+                        <form asp-action="Approve" asp-controller="Appointment" method="post" style="display:inline;">
+                            <input type="hidden" name="id" value="@a.Id" />
+                            <button type="submit" class="btn btn-success btn-sm">Onayla</button>
+                        </form>
+
+                        <form asp-action="Cancel" asp-controller="Appointment" method="post" style="display:inline;">
+                            <input type="hidden" name="id" value="@a.Id" />
+                            <button type="submit" class="btn btn-danger btn-sm">İptal</button>
+                        </form>
+                    }
+                    else if (a.Status == WebProgOdev.Models.AppointmentStatus.Approved)
+                    {
+                        <form asp-action="Cancel" asp-controller="Appointment" method="post" style="display:inline;">
+                            <input type="hidden" name="id" value="@a.Id" />
+                            <button type="submit" class="btn btn-danger btn-sm">İptal</button>
+                        </form>
+                    }
+                    else
+                    {
+                        <span class="text-muted">-</span>
+                    }
+                </td>
+
+            </tr>
+        }
+    </tbody>
+</table>

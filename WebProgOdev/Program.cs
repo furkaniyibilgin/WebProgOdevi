@@ -15,6 +15,8 @@ builder.Services.AddSession(options =>
 });
 
 builder.Services.AddControllersWithViews();
+builder.Services.AddControllers();
+
 
 var app = builder.Build();
 
@@ -33,8 +35,15 @@ app.UseRouting();
 app.UseSession();
 app.UseAuthorization();
 
+app.UseAuthorization();
+
+app.MapControllers();
+
 app.MapControllerRoute(
     name: "default",
     pattern: "{controller=Home}/{action=Index}/{id?}");
+
+app.Run();
+
 
 app.Run();

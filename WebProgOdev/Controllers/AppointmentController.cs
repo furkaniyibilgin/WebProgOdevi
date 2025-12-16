@@ -2,6 +2,7 @@
 using Microsoft.EntityFrameworkCore;
 using WebProgOdev.Data;
 using WebProgOdev.Models;
+using Microsoft.AspNetCore.Http;
 using System.Linq;
 
 namespace WebProgOdev.Controllers
@@ -19,6 +20,8 @@ namespace WebProgOdev.Controllers
             int? userId = HttpContext.Session.GetInt32("UserId");
             return userId.HasValue && userId.Value > 0;
         }
+       
+
 
         private int GetCurrentUserId()
         {
@@ -30,7 +33,34 @@ namespace WebProgOdev.Controllers
 
             return userId.Value;
         }
+        private bool IsAdmin()
+        {
+            var role = HttpContext.Session.GetString("UserRole");
+            return role == "Admin";
+        }
+        [HttpGet]
+        public IActionResult AdminList()
+        {
+            if (!IsLoggedIn())
+            {
+                return RedirectToAction("Login", "Account");
+            }
 
+            if (!IsAdmin())
+            {
+                return View("~/Views/Shared/AccessDenied.cshtml");
+            }
+
+
+            var appointments = _context.Appointments
+                .Include(a => a.Service)
+                .Include(a => a.Trainer)
+                .Include(a => a.User)
+                .OrderByDescending(a => a.StartTime)
+                .ToList();
+
+            return View(appointments);
+        }
 
         [HttpGet]
         public IActionResult Create()
@@ -224,6 +254,67 @@ namespace WebProgOdev.Controllers
             _context.SaveChanges();
 
             return RedirectToAction("MyAppointments");
+        }
+        [HttpPost]
+        public IActionResult Approve(int id)
+        {
+            if (!IsLoggedIn())
+            {
+                return RedirectToAction("Login", "Account");
+            }
+
+            if (!IsAdmin())
+            {
+                return View("~/Views/Shared/AccessDenied.cshtml");
+            }
+
+            var appointment = _context.Appointments.FirstOrDefault(a => a.Id == id);
+            if (appointment == null)
+            {
+                return NotFound();
+            }
+
+            // Sadece Pending ise onayla
+            if (appointment.Status != AppointmentStatus.Pending)
+            {
+                return RedirectToAction("AdminList");
+            }
+
+            appointment.Status = AppointmentStatus.Approved;
+            _context.SaveChanges();
+
+            return RedirectToAction("AdminList");
+        }
+
+        [HttpPost]
+        public IActionResult Cancel(int id)
+        {
+            if (!IsLoggedIn())
+            {
+                return RedirectToAction("Login", "Account");
+            }
+
+            if (!IsAdmin())
+            {
+                return View("~/Views/Shared/AccessDenied.cshtml");
+            }
+
+            var appointment = _context.Appointments.FirstOrDefault(a => a.Id == id);
+            if (appointment == null)
+            {
+                return NotFound();
+            }
+
+            // Approved veya Pending iken iptal edilebilir
+            if (appointment.Status == AppointmentStatus.Cancelled)
+            {
+                return RedirectToAction("AdminList");
+            }
+
+            appointment.Status = AppointmentStatus.Cancelled;
+            _context.SaveChanges();
+
+            return RedirectToAction("AdminList");
         }
 
 
