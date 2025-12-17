@@ -74,6 +74,62 @@ namespace WebProgOdev.Controllers
         }
 
         [HttpGet]
+        public IActionResult Edit(int id)
+        {
+            if (!IsAdmin())
+            {
+                return Content("Bu sayfaya sadece admin erişebilir.");
+            }
+
+            var trainer = _context.Trainers.FirstOrDefault(t => t.Id == id);
+            if (trainer == null)
+            {
+                return NotFound();
+            }
+
+            return View(trainer);
+        }
+
+        [HttpPost]
+        public IActionResult Edit(Trainer model)
+        {
+            if (!IsAdmin())
+            {
+                return Content("Bu sayfaya sadece admin erişebilir.");
+            }
+
+            if (model.StartHour >= model.EndHour)
+            {
+                ModelState.AddModelError("", "Başlangıç saati bitiş saatinden küçük olmalıdır.");
+            }
+
+            if (!ModelState.IsValid)
+            {
+                return View(model);
+            }
+
+            var trainer = _context.Trainers.FirstOrDefault(t => t.Id == model.Id);
+            if (trainer == null)
+            {
+                return NotFound();
+            }
+
+            trainer.FirstName = model.FirstName;
+            trainer.LastName = model.LastName;
+            trainer.Specialty = model.Specialty;
+            trainer.Bio = model.Bio;
+            trainer.IsActive = model.IsActive;
+
+            trainer.StartHour = model.StartHour;
+            trainer.EndHour = model.EndHour;
+
+            _context.SaveChanges();
+
+            return RedirectToAction("List");
+        }
+
+
+        [HttpGet]
         public IActionResult Delete(int id)
         {
             if (!IsAdmin())

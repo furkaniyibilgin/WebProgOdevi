@@ -29,8 +29,10 @@
                 <td>@t.StartHour:00 - @t.EndHour:00</td>
                 <td>@(t.IsActive ? "Evet" : "Hayır")</td>
                 <td>
+                    <a class="btn btn-sm btn-warning" asp-action="Edit" asp-route-id="@t.Id">Düzenle</a>
                     <a class="btn btn-sm btn-danger" asp-action="Delete" asp-route-id="@t.Id">Sil</a>
                 </td>
+
             </tr>
         }
     </tbody>

@@ -1,0 +1,75 @@
+﻿@model WebProgOdev.Models.Trainer
+
+@{
+    ViewData["Title"] = "Eğitmen Düzenle";
+}
+
+<h2>Eğitmen Düzenle</h2>
+
+@if (!ViewData.ModelState.IsValid)
+{
+    <div class="alert alert-danger">
+        @foreach (var error in ViewData.ModelState.Values.SelectMany(v => v.Errors))
+        {
+            <div>@error.ErrorMessage</div>
+        }
+    </div>
+}
+
+<form method="post">
+
+    <input type="hidden" asp-for="Id" />
+
+    <div class="mb-3">
+        <label class="form-label">Ad</label>
+        <input asp-for="FirstName" class="form-control" />
+        @Html.ValidationMessageFor(m => m.FirstName, "", new { @class = "text-danger" })
+    </div>
+
+    <div class="mb-3">
+        <label class="form-label">Soyad</label>
+        <input asp-for="LastName" class="form-control" />
+        @Html.ValidationMessageFor(m => m.LastName, "", new { @class = "text-danger" })
+    </div>
+
+    <div class="mb-3">
+        <label class="form-label">Uzmanlık</label>
+        <input asp-for="Specialty" class="form-control" />
+        @Html.ValidationMessageFor(m => m.Specialty, "", new { @class = "text-danger" })
+    </div>
+
+    <div class="mb-3">
+        <label class="form-label">Bio</label>
+        <textarea asp-for="Bio" class="form-control" rows="4"></textarea>
+        @Html.ValidationMessageFor(m => m.Bio, "", new { @class = "text-danger" })
+    </div>
+
+    <div class="mb-3">
+        <label class="form-label">Çalışma Saatleri</label>
+        <div class="row">
+            <div class="col-md-3">
+                <label class="form-label">Başlangıç</label>
+                <input asp-for="StartHour" class="form-control" />
+                @Html.ValidationMessageFor(m => m.StartHour, "", new { @class = "text-danger" })
+            </div>
+            <div class="col-md-3">
+                <label class="form-label">Bitiş</label>
+                <input asp-for="EndHour" class="form-control" />
+                @Html.ValidationMessageFor(m => m.EndHour, "", new { @class = "text-danger" })
+            </div>
+        </div>
+        <small class="text-muted">Örn: 8 - 22</small>
+    </div>
+
+    <div class="form-check mb-3">
+        <input asp-for="IsActive" class="form-check-input" />
+        <label class="form-check-label">Aktif mi?</label>
+    </div>
+
+    <button type="submit" class="btn btn-primary">Kaydet</button>
+    <a class="btn btn-secondary" asp-action="List">Geri</a>
+</form>
+
+@section Scripts {
+    <partial name="_ValidationScriptsPartial" />
+}

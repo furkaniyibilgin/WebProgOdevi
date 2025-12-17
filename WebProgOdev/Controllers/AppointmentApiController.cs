@@ -19,11 +19,6 @@ namespace WebProgOdev.Controllers
         }
 
         // GET: /api/appointmentsapi
-        // Optional filters:
-        // ?status=Pending|Approved|Cancelled
-        // ?trainerId=1
-        // ?userId=2
-        // ?date=2025-12-16   (yyyy-MM-dd)
         [HttpGet]
         public IActionResult GetAll(string? status, int? trainerId, int? userId, string? date)
         {
