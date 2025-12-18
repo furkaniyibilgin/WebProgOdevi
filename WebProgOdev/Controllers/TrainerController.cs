@@ -109,9 +109,16 @@ namespace WebProgOdev.Controllers
             }
 
             var trainer = _context.Trainers.FirstOrDefault(t => t.Id == model.Id);
-            if (trainer == null)
+            if (trainer.IsActive == true && model.IsActive == false)
             {
-                return NotFound();
+                bool hasUpcoming = _context.Appointments
+                    .Any(a => a.TrainerId == trainer.Id && a.EndTime > DateTime.Now);
+
+                if (hasUpcoming)
+                {
+                    ModelState.AddModelError("", "Bu eğitmenin gelecekte randevusu var. Bu yüzden pasif yapılamaz.");
+                    return View(model);
+                }
             }
 
             trainer.FirstName = model.FirstName;
@@ -159,11 +166,22 @@ namespace WebProgOdev.Controllers
                 return NotFound();
             }
 
+            bool hasUpcoming = _context.Appointments
+                .Any(a => a.TrainerId == id && a.EndTime > DateTime.Now);
+
+            if (hasUpcoming)
+            {
+                ViewBag.Error = "Bu eğitmenin gelecekte randevusu var. Önce randevuları iptal edin veya eğitmeni pasif yapın.";
+                return View("Delete", trainer);
+            }
+
             _context.Trainers.Remove(trainer);
             _context.SaveChanges();
 
             return RedirectToAction("List");
         }
+
+
         public ActionResult Egitmen(int id = 1)
         {
             var trainer = _context.Trainers.FirstOrDefault(t => t.Id == id);

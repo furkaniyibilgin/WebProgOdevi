@@ -6,6 +6,11 @@
 
 <h2>Eğitmen Sil</h2>
 
+@if (ViewBag.Error != null)
+{
+    <div class="alert alert-danger">@ViewBag.Error</div>
+}   
+
 <p>Bu eğitmeni silmek istediğinize emin misiniz?</p>
 
 <ul>

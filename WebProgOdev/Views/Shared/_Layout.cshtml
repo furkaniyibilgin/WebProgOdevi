@@ -45,6 +45,15 @@
                             </a>
                         </li>
 
+                        @* AI sayfası (herkese açık) *@
+                        <li class="nav-item">
+                            <a class="nav-link text-dark" asp-controller="Ai" asp-action="Index">AI Öneri</a>
+                        </li>
+                        <li class="nav-item">
+                            <a class="nav-link text-dark" href="/api/appointmentsapi">API (Randevular JSON)</a>
+                        </li>
+
+
                         @* Admin menüsü *@
                         @if (isAdmin)
                         {
@@ -59,6 +68,10 @@
 
                         @if (isLoggedIn)
                         {
+                            <li class="nav-item">
+                                <a class="nav-link text-dark" asp-controller="Appointment" asp-action="Create">Yeni Randevu</a>
+                            </li>
+
                             <li class="nav-item">
                                 <a class="nav-link text-dark" asp-controller="Appointment" asp-action="MyAppointments">Randevularım</a>
                             </li>
