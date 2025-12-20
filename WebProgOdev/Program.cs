@@ -17,6 +17,7 @@ builder.Services.AddSession(options =>
 builder.Services.AddControllersWithViews();
 
 builder.Services.AddHttpClient();
+builder.Services.AddScoped<WebProgOdev.Services.GroqService>();
 builder.Services.AddSingleton<PollinationsService>();
 
 var app = builder.Build();
