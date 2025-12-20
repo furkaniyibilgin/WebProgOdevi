@@ -4,35 +4,39 @@
     ViewData["Title"] = "Eğitmenlerimiz";
 }
 
-<h2>Eğitmenlerimiz</h2>
-
-@if (!Model.Any())
-{
-    <p>Şu anda görüntülenecek aktif eğitmen bulunmamaktadır.</p>
-}
-else
-{
-    <div class="row">
-        @foreach (var t in Model)
-        {
-            <div class="col-md-4 mb-3">
-                <div class="card">
-                    <div class="card-body">
-                        <h5 class="card-title">@t.FullName</h5>
-                        @if (!string.IsNullOrEmpty(t.Specialty))
-                        {
-                            <p class="card-subtitle mb-2 text-muted">@t.Specialty</p>
-                        }
-                        @if (!string.IsNullOrEmpty(t.Bio))
-                        {
-                            <p class="card-text">@t.Bio</p>
-                        }
-                        <p class="card-text">
-                            Çalışma Saatleri: @t.StartHour:00 - @t.EndHour:00
-                        </p>
+<div class="card p-4">
+    <h2 class="mb-4">Eğitmenlerimiz</h2>
+    @if (!Model.Any())
+    {
+        <p>Şu anda görüntülenecek aktif eğitmen bulunmamaktadır.</p>
+    }
+    else
+    {
+        <div class="row">
+            @foreach (var t in Model)
+            {
+                <div class="col-md-4 mb-3">
+                    <div class="card">
+                        <div class="card-body">
+                            <h5 class="card-title">@t.FullName</h5>
+                            @if (!string.IsNullOrEmpty(t.Specialty))
+                            {
+                                <p class="card-subtitle mb-2 text-muted">@t.Specialty</p>
+                            }
+                            @if (!string.IsNullOrEmpty(t.Bio))
+                            {
+                                <p class="card-text">@t.Bio</p>
+                            }
+                            <p class="card-text">
+                                Çalışma Saatleri: @t.StartHour:00 - @t.EndHour:00
+                            </p>
+                        </div>
                     </div>
                 </div>
-            </div>
-        }
-    </div>
-}
+            }
+        </div>
+    }
+
+</div>
+
+

@@ -3,13 +3,13 @@
 <head>
     <title>Eğitmen Bilgileri</title>
 </head>
-<body>
 
+<div class="card p-4" style="max-width:600px">
     <h1>Eğitmen Bilgileri</h1>
 
     <p>Ad Soyad: @Model.FullName</p>
     <p>Uzmanlık @Model.Specialty</p>
     <p>Hakkında: @Model.Bio</p>
     <p>@(Model.IsActive ? "Evet" : "Hayır")</p>
+</div>
 
-</body>

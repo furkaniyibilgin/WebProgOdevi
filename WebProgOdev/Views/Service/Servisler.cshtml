@@ -4,44 +4,48 @@
     ViewData["Title"] = "Yeni Servis";
 }
 
-<h2>Yeni Servis Ekle</h2>
+<div class="card p-4">
+    <h2 class="mb-4">Yeni Servis Ekle</h2>
 
-@Html.ValidationSummary(true, "", new { @class = "text-danger" })
+    @Html.ValidationSummary(true, "", new { @class = "text-danger" })
 
-<form method="post">
-    <div class="mb-3">
-        <label class="form-label">Servis Adı</label>
-        @Html.TextBoxFor(m => m.Name, new { @class = "form-control" })
-        @Html.ValidationMessageFor(m => m.Name, "", new { @class = "text-danger" })
-    </div>
+    <form method="post">
+        <div class="mb-3">
+            <label class="form-label">Servis Adı</label>
+            @Html.TextBoxFor(m => m.Name, new { @class = "form-control" })
+            @Html.ValidationMessageFor(m => m.Name, "", new { @class = "text-danger" })
+        </div>
 
-    <div class="mb-3">
-        <label class="form-label">Açıklama</label>
-        @Html.TextAreaFor(m => m.Description, new { @class = "form-control", rows = 3 })
-        @Html.ValidationMessageFor(m => m.Description, "", new { @class = "text-danger" })
-    </div>
+        <div class="mb-3">
+            <label class="form-label">Açıklama</label>
+            @Html.TextAreaFor(m => m.Description, new { @class = "form-control", rows = 3 })
+            @Html.ValidationMessageFor(m => m.Description, "", new { @class = "text-danger" })
+        </div>
 
-    <div class="mb-3">
-        <label class="form-label">Süre (dakika)</label>
-        @Html.TextBoxFor(m => m.DurationMinutes, new { @class = "form-control", type = "number", min = "10", max = "300" })
-        @Html.ValidationMessageFor(m => m.DurationMinutes, "", new { @class = "text-danger" })
-    </div>
+        <div class="mb-3">
+            <label class="form-label">Süre (dakika)</label>
+            @Html.TextBoxFor(m => m.DurationMinutes, new { @class = "form-control", type = "number", min = "10", max = "300" })
+            @Html.ValidationMessageFor(m => m.DurationMinutes, "", new { @class = "text-danger" })
+        </div>
 
-    <div class="mb-3">
-        <label class="form-label">Ücret</label>
-        @Html.TextBoxFor(m => m.Price, new { @class = "form-control", type = "number", step = "0.01", min = "0", max = "10000" })
-        @Html.ValidationMessageFor(m => m.Price, "", new { @class = "text-danger" })
-    </div>
+        <div class="mb-3">
+            <label class="form-label">Ücret</label>
+            @Html.TextBoxFor(m => m.Price, new { @class = "form-control", type = "number", step = "0.01", min = "0", max = "10000" })
+            @Html.ValidationMessageFor(m => m.Price, "", new { @class = "text-danger" })
+        </div>
 
-    <div class="form-check mb-3">
-        @Html.CheckBoxFor(m => m.IsActive, new { @class = "form-check-input" })
-        <label class="form-check-label">Aktif mi?</label>
-    </div>
+        <div class="form-check mb-3">
+            @Html.CheckBoxFor(m => m.IsActive, new { @class = "form-check-input" })
+            <label class="form-check-label">Aktif mi?</label>
+        </div>
 
-    <button type="submit" class="btn btn-primary">Kaydet</button>
-    <a class="btn btn-secondary" asp-action="List">Geri</a>
-</form>
+        <button type="submit" class="btn btn-primary">Kaydet</button>
+        <a class="btn btn-secondary" asp-action="List">Geri</a>
+    </form>
 
-@section Scripts {
-    <partial name="_ValidationScriptsPartial" />
-}
+    @section Scripts {
+        <partial name="_ValidationScriptsPartial" />
+    }
+
+</div>
+

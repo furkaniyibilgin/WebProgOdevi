@@ -3,19 +3,21 @@
 @{
     ViewData["Title"] = "Servis Sil";
 }
+<div class="card p-4" style="max-width:600px">
+    <h2>Servis Sil</h2>
 
-<h2>Servis Sil</h2>
+    <p>Bu servisi silmek istediğinize emin misiniz?</p>
 
-<p>Bu servisi silmek istediğinize emin misiniz?</p>
+    <ul>
+        <li>Adı: @Model.Name</li>
+        <li>Süre: @Model.DurationMinutes dakika</li>
+        <li>Ücret: @Model.Price</li>
+    </ul>
 
-<ul>
-    <li>Adı: @Model.Name</li>
-    <li>Süre: @Model.DurationMinutes dakika</li>
-    <li>Ücret: @Model.Price</li>
-</ul>
+    <form method="post" asp-action="DeleteConfirmed" asp-route-id="@Model.Id">
+        <button type="submit" class="btn btn-danger">Evet, Sil</button>
+        <a class="btn btn-secondary" asp-action="List">Vazgeç</a>
+    </form>
 
-<form method="post" asp-action="DeleteConfirmed" asp-route-id="@Model.Id">
-    <button type="submit" class="btn btn-danger">Evet, Sil</button>
-    <a class="btn btn-secondary" asp-action="List">Vazgeç</a>
-</form>
-    
+</div>
+

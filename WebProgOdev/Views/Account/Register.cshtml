@@ -2,26 +2,29 @@
     ViewData["Title"] = "Kayıt Ol";
 }
 
-<h2>Kayıt Ol</h2>
+<div class="card p-4 mx-auto" style="max-width:420px">
+    <h3 class="mb-3">Kayıt Ol</h3>
+    @if (ViewBag.Error != null)
+    {
+        <p style="color:red">@ViewBag.Error</p>
+    }
 
-@if (ViewBag.Error != null)
-{
-    <p style="color:red">@ViewBag.Error</p>
-}
+    <form method="post">
+        <p>
+            Email: <input type="email" name="email" />
+        </p>
+        <p>
+            Şifre: <input type="password" name="password" />
+        </p>
+        <p>
+            Ad: <input type="text" name="firstName" />
+        </p>
+        <p>
+            Soyad: <input type="text" name="lastName" />
+        </p>
 
-<form method="post">
-    <p>
-        Email: <input type="email" name="email" />
-    </p>
-    <p>
-        Şifre: <input type="password" name="password" />
-    </p>
-    <p>
-        Ad: <input type="text" name="firstName" />
-    </p>
-    <p>
-        Soyad: <input type="text" name="lastName" />
-    </p>
+        <button type="submit">Kayıt Ol</button>
+    </form>
 
-    <button type="submit">Kayıt Ol</button>
-</form>
+</div>
+

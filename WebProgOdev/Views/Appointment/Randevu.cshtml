@@ -1,20 +1,21 @@
 ﻿@model WebProgOdev.Models.Appointment
 
-<head>
-    <title>Randevu Bilgileri</title>
-</head>
-<body>
+<div class="card p-4">
+    <h2 class="mb-4">Randevularım</h2>
+    
 
-    <h1>Randevu Bilgileri</h1>
+        <h1>Randevu Bilgileri</h1>
 
-    <p>Servis: @Model.Service.Name</p>
-    <p>Eğitmen: @Model.Trainer.FullName</p>
+        <p>Servis: @Model.Service.Name</p>
+        <p>Eğitmen: @Model.Trainer.FullName</p>
 
-    <p>Kullanıcı ID  @Model.UserId</p>
+        <p>Kullanıcı ID  @Model.UserId</p>
 
-    <p>Başlangıç @Model.StartTime</p>
-    <p>Bitiş: @Model.EndTime</p>
-    <p>Durum: @Model.Status</p>
-    <p>Ücret: @Model.Price</p>
+        <p>Başlangıç @Model.StartTime</p>
+        <p>Bitiş: @Model.EndTime</p>
+        <p>Durum: @Model.Status</p>
+        <p>Ücret: @Model.Price</p>
 
-</body>
+</div>
+
+

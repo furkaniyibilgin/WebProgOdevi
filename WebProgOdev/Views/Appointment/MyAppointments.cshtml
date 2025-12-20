@@ -4,37 +4,41 @@
     ViewData["Title"] = "Randevularım";
 }
 
-<h2>Randevularım</h2>
+<div class="card p-4">
+    <h2 class="mb-4">Randevularım</h2>
 
-@if (!Model.Any())
-{
-    <p>Henüz bir randevunuz bulunmamaktadır.</p>
-}
-else
-{
-    <table class="table table-striped">
-        <thead>
-            <tr>
-                <th>Tarih / Saat</th>
-                <th>Servis</th>
-                <th>Eğitmen</th>
-                <th>Süre</th>
-                <th>Ücret</th>
-                <th>Durum</th>
-            </tr>
-        </thead>
-        <tbody>
-            @foreach (var a in Model)
-            {
+    @if (!Model.Any())
+    {
+        <p>Henüz bir randevunuz bulunmamaktadır.</p>
+    }
+    else
+    {
+        <table class="table table-striped">
+            <thead>
                 <tr>
-                    <td>@a.StartTime.ToString("g")</td>
-                    <td>@(a.Service != null ? a.Service.Name : a.ServiceId.ToString())</td>
-                    <td>@(a.Trainer != null ? a.Trainer.FirstName + " " + a.Trainer.LastName : a.TrainerId.ToString())</td>
-                    <td>@((a.EndTime - a.StartTime).TotalMinutes) dk</td>
-                    <td>@a.Price</td>
-                    <td>@a.Status.ToString()</td>
+                    <th>Tarih / Saat</th>
+                    <th>Servis</th>
+                    <th>Eğitmen</th>
+                    <th>Süre</th>
+                    <th>Ücret</th>
+                    <th>Durum</th>
                 </tr>
-            }
-        </tbody>
-    </table>
-}
+            </thead>
+            <tbody>
+                @foreach (var a in Model)
+                {
+                    <tr>
+                        <td>@a.StartTime.ToString("g")</td>
+                        <td>@(a.Service != null ? a.Service.Name : a.ServiceId.ToString())</td>
+                        <td>@(a.Trainer != null ? a.Trainer.FirstName + " " + a.Trainer.LastName : a.TrainerId.ToString())</td>
+                        <td>@((a.EndTime - a.StartTime).TotalMinutes) dk</td>
+                        <td>@a.Price</td>
+                        <td>@a.Status.ToString()</td>
+                    </tr>
+                }
+            </tbody>
+        </table>
+    }
+
+</div>
+
